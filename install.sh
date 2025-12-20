@@ -120,7 +120,7 @@ while true; do
             2) añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
 	       pause
 	       ;;
-	    3) apt install vim btop;pause
+	    3) apt install vim btop
 	       pause
 	       ;;
             4) exit 0 ;;
