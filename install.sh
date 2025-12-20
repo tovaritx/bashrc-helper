@@ -108,15 +108,15 @@ while true; do
 ##################################################################################################################
         case $seleccion in
             0) rm /root/.vimrc;rm /home/tovaritx/.vimrc;
-               añadir_archivo "$BASE_URL/vimrc" "/home/tovaritx/.vimrc" "\""
-               añadir_archivo "$BASE_URL/vimrc" "/root/.vimrc" "\""
+               añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
+               añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
                apt install vim git;pause
                vim +PlugInstall +qa;pause;;
-            1) añadir_archivo "$BASE_URL/bashrc" "/root/.bashrc" "#"
-               añadir_archivo "$BASE_URL/bashrc" "/home/tovaritx/.bashrc" "#"
+            1) añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
+               añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
 	       pause
 	       ;;
-            2) añadir_archivo "$BASE_URL/ssh" "/etc/ssh/sshd_config" "#"
+            2) añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
 	       pause
 	       ;;
 	    3) apt install vim btop;pause
