@@ -1,0 +1,42 @@
+" Hay que instalar antes git
+" Después, dentro de vim, para instalar los plugins :PlugInstall
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+ silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+ autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_bold='1'
+call plug#end()
+
+syntax on
+"colorscheme gruvbox
+colorscheme codedark
+set mouse-=a
+set encoding=utf-8          " always use unicode
+set hidden                  " to hide warning when opening files
+set ignorecase              " to ignore case in searchs
+set scrolloff=8
+"set number relativenumber   " Relative numbers for jumping
+"set nu rnu  "Hybrid. Relative numbers and the current line number
+set ttymouse=
+inoremap <Esc>Oq 1
+inoremap <Esc>Or 2
+inoremap <Esc>Os 3
+inoremap <Esc>Ot 4
+inoremap <Esc>Ou 5
+inoremap <Esc>Ov 6
+inoremap <Esc>Ow 7
+inoremap <Esc>Ox 8
+inoremap <Esc>Oy 9
+inoremap <Esc>Op 0
+inoremap <Esc>On .
+inoremap <Esc>OQ /
+inoremap <Esc>OR *
+inoremap <Esc>Ol +
+inoremap <Esc>OS -
+inoremap <Esc>OM <Enter>
