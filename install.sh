@@ -3,6 +3,7 @@
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido"
 TMP_DIR="/tmp/bashrc-helper"
 
+rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
 cd "$TMP_DIR"
 
