@@ -25,7 +25,7 @@ MENU_PRINCIPAL=(
 )
 # Colores
 COLOR_SEL_PRINCIPAL="\e[44m"   # azul selección
-COLOR_NORM_PRINCIPAL="\e[44m"  # azul no seleccionada (fondo uniforme)
+COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 
 MENU_SISTEMA=(
   "Permitir SSH root"
@@ -158,7 +158,7 @@ menu_loop() {
 
         for i in "${!_opciones[@]}"; do
           if [[ $i -eq $seleccion ]]; then
-              printf "  ${COLOR_SEL}${BLANCO} ▶ %-40s ${RESET}\n" "${_opciones[i]}"
+              printf "  ${COLOR_SEL}${BLANCO} >> %-40s ${RESET}\n" "${_opciones[i]}"
           else
               printf "  ${COLOR_NORM}${BLANCO}   %-40s ${RESET}\n" "${_opciones[i]}"
           fi
