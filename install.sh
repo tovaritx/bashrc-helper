@@ -18,9 +18,11 @@ curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
 # MENÚS (SOLO TEXTOS)
 #############################################################################################
 MENU_PRINCIPAL=(
-  "Instalar vim / git y personalizar entorno"
+  "Personalizar vim"
   "Personalizar entorno bash"
-  "Sistema"
+  "Permitir SSH root"
+  "Instalar programas consola"
+  "Submenú programas"
   "Salir"
 )
 # Colores
@@ -28,8 +30,7 @@ COLOR_SEL_PRINCIPAL="\e[44m"   # azul selección
 COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 
 MENU_SISTEMA=(
-  "Permitir SSH root"
-  "Instalar btop"
+  "Ejecutar btop"
   "Volver"
 )
 # Colores
@@ -40,54 +41,56 @@ COLOR_NORM_SISTEMA="\e[100m"  # gris oscuro no seleccionada
 # ACCIONES ASOCIADAS A MENÚS
 #############################################################################################
 ACCIONES_PRINCIPAL=(
-  accion0
-  accion1
-  menu_sistema
-  accion_salir
+  _vim
+  _bash
+  _ssh
+  _instalar
+  _menu_programas
+  _salir
 )
 
 ACCIONES_SISTEMA=(
-  accion_ssh
-  accion_btop
-  volver
+  _btop
+  _volver
 )
 
 #############################################################################################
 # ACCIONES
 #############################################################################################
-accion0() {
+_vim() {
     rm -f /root/.vimrc /home/tovaritx/.vimrc
     añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
     añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
-    apt install -y vim git
-    pause
-    vim +PlugInstall +qa
-    pause
 }
 
-accion1() {
+_bash() {
     añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
     añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
     pause
 }
 
-accion_ssh() {
+_ssh() {
     añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
     systemctl restart ssh
     pause
 }
 
-accion_btop() {
-    apt install -y btop
+_instalar() {
+    apt install -y vim git btop
+    vim +PlugInstall +qa
     pause
 }
 
-accion_salir() {
+_btop() {
+  btop
+}
+
+_salir() {
     clear
     exit 0
 }
 
-volver() {
+_volver() {
     return 1
 }
 
