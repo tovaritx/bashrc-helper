@@ -199,7 +199,7 @@ menu_loop() {
 #############################################################################################
 # SUBMENÚS 
 #############################################################################################
-menu_sistema() {
+_menu_programas() {
     menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
 }
 
