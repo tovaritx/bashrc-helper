@@ -5,6 +5,14 @@
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido"
 TMP_DIR="/tmp/bashrc-helper"
 
+################################################################################
+# AUTO-ACTUALIZACIÓN
+################################################################################
+TMP_SCRIPT="/tmp/install.sh"
+curl -fsSL "https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/install.sh" -o "$TMP_SCRIPT"
+chmod +x "$TMP_SCRIPT"
+exec "$TMP_SCRIPT"
+
 #############################################################################################
 # MENÚS (SOLO TEXTOS)
 #############################################################################################
