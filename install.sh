@@ -58,24 +58,29 @@ ACCIONES_SISTEMA=(
 # ACCIONES
 #############################################################################################
 _vim() {
+    clear
     rm -f /root/.vimrc /home/tovaritx/.vimrc
     añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
     añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
+    pause
 }
 
 _bash() {
+    clear
     añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
     añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
     pause
 }
 
 _ssh() {
+    clear
     añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
     systemctl restart ssh
     pause
 }
 
 _instalar() {
+    clear
     apt install -y vim git btop
     vim +PlugInstall +qa
     pause
@@ -94,6 +99,9 @@ _volver() {
     return 1
 }
 
+_menu_programas() {
+    menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
+}
 
 
 #############################################################################################
@@ -196,12 +204,6 @@ menu_loop() {
     done
 }
 
-#############################################################################################
-# SUBMENÚS 
-#############################################################################################
-_menu_programas() {
-    menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
-}
 
 #############################################################################################
 # ARRANQUE
