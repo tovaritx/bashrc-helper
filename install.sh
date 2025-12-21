@@ -38,6 +38,47 @@ ACCIONES_SISTEMA=(
 )
 
 #############################################################################################
+# ACCIONES
+#############################################################################################
+accion0() {
+    rm -f /root/.vimrc /home/tovaritx/.vimrc
+    añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
+    añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
+    apt install -y vim git
+    pause
+    vim +PlugInstall +qa
+    pause
+}
+
+accion1() {
+    añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
+    pause
+}
+
+accion_ssh() {
+    añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
+    systemctl restart ssh
+    pause
+}
+
+accion_btop() {
+    apt install -y btop
+    pause
+}
+
+accion_salir() {
+    clear
+    exit 0
+}
+
+volver() {
+    return 1
+}
+
+
+
+#############################################################################################
 # COLORES (ALTO CONTRASTE)
 #############################################################################################
 RESET="\e[0m"
@@ -93,44 +134,6 @@ install() {
     curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
 }
 
-#############################################################################################
-# ACCIONES
-#############################################################################################
-accion0() {
-    rm -f /root/.vimrc /home/tovaritx/.vimrc
-    añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
-    añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
-    apt install -y vim git
-    pause
-    vim +PlugInstall +qa
-    pause
-}
-
-accion1() {
-    añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
-    pause
-}
-
-accion_ssh() {
-    añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
-    systemctl restart ssh
-    pause
-}
-
-accion_btop() {
-    apt install -y btop
-    pause
-}
-
-accion_salir() {
-    clear
-    exit 0
-}
-
-volver() {
-    return
-}
 
 #############################################################################################
 # MOTOR DE MENÚ (GENÉRICO)
@@ -170,13 +173,14 @@ menu_loop() {
             ((seleccion>=total)) && seleccion=0
 
         elif [[ $tecla == "" ]]; then
-            if declare -f "${_acciones[$seleccion]}" >/dev/null; then
-                "${_acciones[$seleccion]}"
-            else
-                echo "Acción no definida"
-                pause
-            fi
-        fi
+          if declare -f "${_acciones[$seleccion]}" >/dev/null; then
+              "${_acciones[$seleccion]}"
+              [[ $? -eq 1 ]] && return
+          else
+              echo "Acción no definida"
+              pause
+          fi
+      fi
     done
 }
 
