@@ -193,7 +193,9 @@ menu_loop() {
 # SUBMENÚS (SON ACCIONES)
 #############################################################################################
 menu_sistema() {
-    menu_loop MENU_SISTEMA ACCIONES_SISTEMA
+    local COLOR_SEL_SUBMENU="\e[45m"  # magenta
+    local COLOR_NORM_SUBMENU="\e[100m" # gris oscuro
+    menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SUBMENU" "$COLOR_NORM_SUBMENU"
 }
 
 #############################################################################################
