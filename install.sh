@@ -168,27 +168,24 @@ menu_loop() {
         if [[ $tecla == $'\x1b' ]]; then
             read -rsn1 -t 0.1 siguiente_tecla 2>/dev/null || siguiente_tecla=""
             if [[ $siguiente_tecla == "[" ]]; then
-                read -rsn1 tecla  # flecha
+                read -rsn1 tecla  # flechas
                 [[ $tecla == "A" ]] && ((seleccion--))
                 [[ $tecla == "B" ]] && ((seleccion++))
                 ((seleccion<0)) && seleccion=$((total-1))
                 ((seleccion>=total)) && seleccion=0
             else
-                # ESC solo → salir del menú
+                # ESC solo → salir del menú/submenú
                 return
             fi
-        fi
-
-
         elif [[ $tecla == "" ]]; then
-          if declare -f "${_acciones[$seleccion]}" >/dev/null; then
-              "${_acciones[$seleccion]}"
-              [[ $? -eq 1 ]] && return
-          else
-              echo "Acción no definida"
-              pause
-          fi
-      fi
+            if declare -f "${_acciones[$seleccion]}" >/dev/null; then
+                "${_acciones[$seleccion]}"
+                [[ $? -eq 1 ]] && return
+            else
+                echo "Acción no definida"
+                pause
+            fi
+        fi
     done
 }
 
