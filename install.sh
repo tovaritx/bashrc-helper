@@ -141,7 +141,8 @@ install() {
 menu_loop() {
     local -n _opciones=$1
     local -n _acciones=$2
-
+    local COLOR_SEL=${3:-$FSELEC}   # color selección, por defecto azul
+    local COLOR_NORM=${4:-$FNORMAL} # color normal, por defecto negro
     local seleccion=0
     local total=${#_opciones[@]}
 
