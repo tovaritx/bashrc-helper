@@ -23,12 +23,18 @@ MENU_PRINCIPAL=(
   "Sistema"
   "Salir"
 )
+# Colores
+COLOR_SEL_PRINCIPAL="\e[44m"   # azul selección
+COLOR_NORM_PRINCIPAL="\e[44m"  # azul no seleccionada (fondo uniforme)
 
 MENU_SISTEMA=(
   "Permitir SSH root"
   "Instalar btop"
   "Volver"
 )
+# Colores
+COLOR_SEL_SISTEMA="\e[45m"    # magenta selección
+COLOR_NORM_SISTEMA="\e[100m"  # gris oscuro no seleccionada
 
 #############################################################################################
 # ACCIONES ASOCIADAS A MENÚS
@@ -188,16 +194,14 @@ menu_loop() {
 }
 
 #############################################################################################
-# SUBMENÚS (SON ACCIONES)
+# SUBMENÚS 
 #############################################################################################
 menu_sistema() {
-    local COLOR_SEL_SUBMENU="\e[45m"  # magenta
-    local COLOR_NORM_SUBMENU="\e[100m" # gris oscuro
-    menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SUBMENU" "$COLOR_NORM_SUBMENU"
+    menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
 }
 
 #############################################################################################
 # ARRANQUE
 #############################################################################################
-menu_loop MENU_PRINCIPAL ACCIONES_PRINCIPAL
+menu_loop MENU_PRINCIPAL ACCIONES_PRINCIPAL "$COLOR_SEL_PRINCIPAL" "$COLOR_NORM_PRINCIPAL"
 
