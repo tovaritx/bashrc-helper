@@ -151,11 +151,11 @@ menu_loop() {
         echo
 
         for i in "${!_opciones[@]}"; do
-            if [[ $i -eq $seleccion ]]; then
-                printf "  ${FSELEC}${BLANCO} ▶ %-40s ${RESET}\n" "${_opciones[i]}"
-            else
-                printf "  ${FNORMAL}${BLANCO}   %-40s ${RESET}\n" "${_opciones[i]}"
-            fi
+          if [[ $i -eq $seleccion ]]; then
+              printf "  ${COLOR_SEL}${BLANCO} ▶ %-40s ${RESET}\n" "${_opciones[i]}"
+          else
+              printf "  ${COLOR_NORM}${BLANCO}   %-40s ${RESET}\n" "${_opciones[i]}"
+          fi
         done
 
         echo
