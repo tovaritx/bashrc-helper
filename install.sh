@@ -1,87 +1,61 @@
 #!/bin/bash
 #############################################################################################
-# definiciones
+# DEFINICIONES
 #############################################################################################
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido"
 TMP_DIR="/tmp/bashrc-helper"
 
 #############################################################################################
-# MENÚ (solo textos)
+# MENÚS (SOLO TEXTOS)
 #############################################################################################
-opciones=(
-  "0) Instalar vim / git y personalizar entorno"
-  "1) Personalizar entorno bash"
-  "2) Permitir ssh root"
-  "3) Instalar utilidades btop / "
-  "4) Salir"
+MENU_PRINCIPAL=(
+  "Instalar vim / git y personalizar entorno"
+  "Personalizar entorno bash"
+  "Sistema"
+  "Salir"
 )
 
-###############################################################################################
-# ACCIONES DEL MENÚ
-###############################################################################################
+MENU_SISTEMA=(
+  "Permitir SSH root"
+  "Instalar btop"
+  "Volver"
+)
 
-accion0() {
-    rm /root/.vimrc; rm /home/tovaritx/.vimrc;
-    añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
-    añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
-    apt install vim git; pause
-    vim +PlugInstall +qa; pause
-}
+#############################################################################################
+# ACCIONES ASOCIADAS A MENÚS
+#############################################################################################
+ACCIONES_PRINCIPAL=(
+  accion0
+  accion1
+  menu_sistema
+  accion_salir
+)
 
-accion1() {
-    añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
-	pause
-}
+ACCIONES_SISTEMA=(
+  accion_ssh
+  accion_btop
+  volver
+)
 
-accion2() {
-    añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
-	pause
-}
-accion3() {
-    apt install vim btop
-	pause
-}
-accion4() {
-    exit 0
-}
-
-#####################################################################
-# INSTALACION DESDE GITHUB
-#####################################################################
-install() {
-	echo "Borrando archivos instalaciones anteriores..."
-	rm -rf "$TMP_DIR"
-	mkdir -p "$TMP_DIR"
-	cd "$TMP_DIR"
-	
-	echo "Descargando archivos..."
-	curl -fsSL "$BASE_URL/vimrc" -o vimrc
-	curl -fsSL "$BASE_URL/bashrc" -o bashrc
-	curl -fsSL "$BASE_URL/ssh" -o ssh
-}
-
-############################
-# COLORES (alto contraste)
-############################
+#############################################################################################
+# COLORES (ALTO CONTRASTE)
+#############################################################################################
 RESET="\e[0m"
 BLANCO="\e[97m"
-NEGRO="\e[30m"
-FSELEC="\e[44m"   # Azul
-FNORMAL="\e[40m"  # Negro
+FSELEC="\e[44m"
+FNORMAL="\e[40m"
 
-############################
-# Pulsa una tecla
-############################
+#############################################################################################
+# PAUSA
+#############################################################################################
 pause() {
     echo
     read -rp "Pulsa Enter para continuar..."
 }
 
-
-############################
-# añade un archivo a otro archivo y comprueba si ya lo hizo antes
-############################
+#############################################################################################
+# AÑADIR ARCHIVO A OTRO (CON ETIQUETAS)
+#############################################################################################
 añadir_archivo() {
     local origen="$1"
     local destino="$2"
@@ -92,81 +66,130 @@ añadir_archivo() {
 
     [[ ! -f "$origen" ]] && echo "No existe $origen" && return
 
-    if ! grep -Fxq "$ini" "$destino"; then
+    if ! grep -Fxq "$ini" "$destino" 2>/dev/null; then
         {
             echo
             echo "$ini"
             cat "$origen"
             echo "$fin"
         } >> "$destino"
-        echo "Añadido correctamente."
+        echo "Añadido correctamente en $destino"
     else
-        echo "Ya existe en $destino."
+        echo "Ya existe en $destino"
     fi
 }
 
+#############################################################################################
+# INSTALACIÓN (DESCARGA DESDE GITHUB)
+#############################################################################################
+install() {
+    echo "Preparando entorno..."
+    rm -rf "$TMP_DIR"
+    mkdir -p "$TMP_DIR"
 
+    echo "Descargando archivos..."
+    curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
+    curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
+    curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
+}
 
-############################
-# DIBUJO DEL MENÚ
-############################
-dibujar_menu() {
+#############################################################################################
+# ACCIONES
+#############################################################################################
+accion0() {
+    rm -f /root/.vimrc /home/tovaritx/.vimrc
+    añadir_archivo "$TMP_DIR/vimrc" "/home/tovaritx/.vimrc" "\""
+    añadir_archivo "$TMP_DIR/vimrc" "/root/.vimrc" "\""
+    apt install -y vim git
+    pause
+    vim +PlugInstall +qa
+    pause
+}
+
+accion1() {
+    añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
+    pause
+}
+
+accion_ssh() {
+    añadir_archivo "$TMP_DIR/ssh" "/etc/ssh/sshd_config" "#"
+    systemctl restart ssh
+    pause
+}
+
+accion_btop() {
+    apt install -y btop
+    pause
+}
+
+accion_salir() {
     clear
-    echo
-    echo "  CONFIGURADOR Y PROGRAMAS TERMINAL"
-    echo "  ─────────────────────────────────"
-    echo
+    exit 0
+}
 
-    for i in "${!opciones[@]}"; do
-        if [[ $i -eq $seleccion ]]; then
-            printf "  ${FSELEC}${BLANCO} ▶ %-30s ${RESET}\n" "${opciones[i]}"
-        else
-            printf "  ${FNORMAL}${BLANCO}   %-30s ${RESET}\n" "${opciones[i]}"
+volver() {
+    return
+}
+
+#############################################################################################
+# MOTOR DE MENÚ (GENÉRICO)
+#############################################################################################
+menu_loop() {
+    local -n _opciones=$1
+    local -n _acciones=$2
+
+    local seleccion=0
+    local total=${#_opciones[@]}
+
+    while true; do
+        clear
+        echo
+        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL"
+        echo "  ─────────────────────────────────"
+        echo
+
+        for i in "${!_opciones[@]}"; do
+            if [[ $i -eq $seleccion ]]; then
+                printf "  ${FSELEC}${BLANCO} ▶ %-40s ${RESET}\n" "${_opciones[i]}"
+            else
+                printf "  ${FNORMAL}${BLANCO}   %-40s ${RESET}\n" "${_opciones[i]}"
+            fi
+        done
+
+        echo
+        echo "  ↑ ↓ mover   Enter seleccionar"
+
+        read -rsn1 tecla
+
+        if [[ $tecla == $'\x1b' ]]; then
+            read -rsn2 tecla
+            [[ $tecla == "[A" ]] && ((seleccion--))
+            [[ $tecla == "[B" ]] && ((seleccion++))
+            ((seleccion<0)) && seleccion=$((total-1))
+            ((seleccion>=total)) && seleccion=0
+
+        elif [[ $tecla == "" ]]; then
+            if declare -f "${_acciones[$seleccion]}" >/dev/null; then
+                "${_acciones[$seleccion]}"
+            else
+                echo "Acción no definida"
+                pause
+            fi
         fi
     done
-
-    echo
-    echo "  ↑ ↓ mover   Enter seleccionar"
 }
 
-############################
-# LOOP PRINCIPAL
-############################
-seleccion=0
-total=${#opciones[@]}
+#############################################################################################
+# SUBMENÚS (SON ACCIONES)
+#############################################################################################
+menu_sistema() {
+    menu_loop MENU_SISTEMA ACCIONES_SISTEMA
+}
 
+#############################################################################################
+# ARRANQUE
+#############################################################################################
 install
+menu_loop MENU_PRINCIPAL ACCIONES_PRINCIPAL
 
-while true; do
-    dibujar_menu
-    read -rsn1 tecla
-
-    if [[ $tecla == $'\x1b' ]]; then
-        read -rsn2 tecla
-        [[ $tecla == "[A" ]] && ((seleccion--))
-        [[ $tecla == "[B" ]] && ((seleccion++))
-        ((seleccion<0)) && seleccion=$((total-1))
-        ((seleccion>=total)) && seleccion=0
-
-    elif [[ $tecla == "" ]]; then
-        clear
-##################################################################################################################
-        case $seleccion in
-            0) accion0;;
-            1) accion1;;
-            2) accion2;;
-	        3) accion3;;
-            4) accion4;;
-            5) accion5;;
-            6) accion6;;
-            7) accion7;;
-            8) accion8;;
-            9) accion9;;
-            10) accion10;;
-            11) accion11;;
-            12) accion12;;
-            13) accion13;;
-        esac
-####################################################################################################################
-    fi
-done
