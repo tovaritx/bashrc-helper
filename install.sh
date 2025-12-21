@@ -4,14 +4,15 @@
 #############################################################################################
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido"
 TMP_DIR="/tmp/bashrc-helper"
+echo "Preparando entorno..."
+rm -rf "$TMP_DIR"
+mkdir -p "$TMP_DIR"
+echo "Descargando archivos..."
+curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
+curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
+curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
 
-################################################################################
-# AUTO-ACTUALIZACIÓN
-################################################################################
-TMP_SCRIPT="/tmp/install.sh"
-curl -fsSL "https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/install.sh" -o "$TMP_SCRIPT"
-chmod +x "$TMP_SCRIPT"
-exec "$TMP_SCRIPT"
+
 
 #############################################################################################
 # MENÚS (SOLO TEXTOS)
@@ -128,19 +129,7 @@ añadir_archivo() {
     fi
 }
 
-#############################################################################################
-# INSTALACIÓN (DESCARGA DESDE GITHUB)
-#############################################################################################
-install() {
-    echo "Preparando entorno..."
-    rm -rf "$TMP_DIR"
-    mkdir -p "$TMP_DIR"
 
-    echo "Descargando archivos..."
-    curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
-    curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
-    curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
-}
 
 
 #############################################################################################
@@ -210,6 +199,5 @@ menu_sistema() {
 #############################################################################################
 # ARRANQUE
 #############################################################################################
-install
 menu_loop MENU_PRINCIPAL ACCIONES_PRINCIPAL
 
