@@ -22,6 +22,7 @@ MENU_PRINCIPAL=(
   "Personalizar entorno bash"
   "Permitir SSH root"
   "Instalar programas consola"
+  "Instalar ProxMenux"
   "Submenú programas"
   "Salir"
 )
@@ -45,11 +46,13 @@ ACCIONES_PRINCIPAL=(
   _bash
   _ssh
   _instalar
+  _proxmenux
   _menu_programas
   _salir
 )
 
 ACCIONES_SISTEMA=(
+  _eproxmenux
   _btop
   _volver
 )
@@ -57,6 +60,13 @@ ACCIONES_SISTEMA=(
 #############################################################################################
 # ACCIONES
 #############################################################################################
+_eproxmenux() {
+  menu
+}
+_proxmenux() {
+  bash -c "$(wget -qLO - https://raw.githubusercontent.com/MacRimi/ProxMenux/main/install_proxmenux.sh)"
+  pause
+}
 _vim() {
     clear
     rm -f /root/.vimrc /home/tovaritx/.vimrc
