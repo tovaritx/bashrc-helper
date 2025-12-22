@@ -31,6 +31,7 @@ COLOR_SEL_PRINCIPAL="\e[44m"   # azul selección
 COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 
 MENU_SISTEMA=(
+  "Ejecutar ProxMenux"
   "Ejecutar btop"
   "Volver"
 )
