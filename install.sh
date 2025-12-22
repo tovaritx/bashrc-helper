@@ -173,8 +173,8 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL 2"
-        echo "  ─────────────────────────────────"
+        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL 3"
+        echo "  ────────────────────────────────────"
         echo
 
         for i in "${!_opciones[@]}"; do
