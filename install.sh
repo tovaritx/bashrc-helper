@@ -31,6 +31,8 @@ MENU_PRINCIPAL=(
 COLOR_SEL_PRINCIPAL="\e[44m"   # azul selección
 COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 
+###############################################################################################
+
 MENU_SISTEMA=(
   "Ejecutar ProxMenux"
   "Ejecutar btop"
@@ -48,6 +50,7 @@ ACCIONES_PRINCIPAL=(
   _bash
   _ssh
   _instalar
+  _instalar_ayudantes
   _proxmenux
   _menu_programas
   _salir
