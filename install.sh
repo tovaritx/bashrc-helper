@@ -208,7 +208,7 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL 3"
+        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL 4"
         echo "  ────────────────────────────────────"
         echo
 
