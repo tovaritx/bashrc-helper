@@ -81,12 +81,7 @@ _vim() {
     pause
 }
 
-_instalar_ayudantes(){
-    clear
-    añadir_archivo "$TMP_DIR/tmux-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/tmux-help.sh" "/home/tovaritx/.bashrc" "#"
-    pause
-}
+
 
 _bash() {
     clear
