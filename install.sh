@@ -22,6 +22,7 @@ MENU_PRINCIPAL=(
   "Personalizar entorno bash"
   "Permitir SSH root"
   "Instalar programas consola"
+  "Instalar ayudantes consola"
   "Instalar ProxMenux"
   "Submenú programas"
   "Salir"
@@ -76,6 +77,12 @@ _vim() {
     pause
 }
 
+_instalar_ayudantes(){
+    clear
+    añadir_archivo "$TMP_DIR/tmux-help.sh" "/root/.bashrc" "#"
+
+    añadir_archivo "$TMP_DIR/tmux-help.sh" "/home/tovaritx/.bashrc" "#"
+}
 _bash() {
     clear
     añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
