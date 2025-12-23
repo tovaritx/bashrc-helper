@@ -144,17 +144,20 @@ añadir_archivo() {
 
     [[ ! -f "$origen" ]] && echo "No existe $origen" && return
 
-    if ! grep -Fxq "$ini" "$destino" 2>/dev/null; then
-        {
-            echo
-            echo "$ini"
-            cat "$origen"
-            echo "$fin"
-        } >> "$destino"
-        echo "Añadido correctamente en $destino"
+    if grep -Fxq "$ini" "$destino" 2>/dev/null; then
+        # Eliminar bloque existente
+        sed -i.bak "/^$(printf '%s' "$ini" | sed 's/[\/&]/\\&/g')$/,/^$(printf '%s' "$fin" | sed 's/[\/&]/\\&/g')$/d" "$destino"
+        echo "Reescrito contenido de $origen en $destino"
     else
-        echo "Ya existe en $destino"
+        echo "Añadiendo $origen en $destino"
     fi
+
+    {
+        echo
+        echo "$ini"
+        cat "$origen"
+        echo "$fin"
+    } >> "$destino"
 }
 
 
