@@ -81,7 +81,12 @@ _vim() {
     pause
 }
 
-
+_instalar_ayudantes(){
+    clear
+    añadir_archivo "$TMP_DIR/tmux-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/tmux-help.sh" "/home/tovaritx/.bashrc" "#"
+    pause
+}
 
 _bash() {
     clear
@@ -187,7 +192,7 @@ quitar_archivo() {
     sed -i.bak "/^$(printf '%s' "$ini" | sed 's/[\/&]/\\&/g')$/,/^$(printf '%s' "$fin" | sed 's/[\/&]/\\&/g')$/d" "$destino"
 
     echo "Eliminado $origen de $destino"
-
+}
 
 #############################################################################################
 # MOTOR DE MENÚ (GENÉRICO)
