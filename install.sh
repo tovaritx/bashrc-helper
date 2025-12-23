@@ -11,6 +11,7 @@ echo "Descargando archivos..."
 curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
 curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
 curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
+curl -fsSL "$BASE_URL/tmux-help.sh"    -o "$TMP_DIR/tmux-help.sh"
 
 
 
