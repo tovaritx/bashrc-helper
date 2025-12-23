@@ -4,6 +4,7 @@ alias ls='ls -la --color'
 alias ll='ls $LS_OPTIONS -l'
 alias l='ls $LS_OPTIONS -lA'
 alias cd..='cd ..'
+alias tovaritx='bash <(curl -fsSL https://raw.githubusercontent.com/tovaritx/bashrc-helper/refs/heads/main/install.sh)'
 #prompt
 #personalizaciones en http://ezprompt.net/
 export PS1='\[\e[38;5;51;40m\]\u\[\e[38;5;50;40m\]@\[\e[38;5;48;40;1;4;53m\]\H\[\e[0;38;5;154;40m\][\[\e[38;5;190;40m\]\A\[\e[38;5;190;40m\]~\[\e[38;5;226;40m\]\d\[\e[38;5;226;40m\]]\[\e[38;5;220;40m\].\[\e[38;5;220;40m\]/\[\e[38;5;220;40m\]\W\[\e[97;40m\]\\$\[\e[0m\] '
