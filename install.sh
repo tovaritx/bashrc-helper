@@ -92,7 +92,7 @@ _ssh() {
 
 _instalar() {
     clear
-    apt install -y vim git btop
+    apt install -y vim git btop tmux
     vim +PlugInstall +qa
     pause
 }
@@ -161,6 +161,25 @@ añadir_archivo() {
 }
 
 
+#############################################################################################
+# QUITAR UN ARCHIVO A OTRO
+#############################################################################################
+quitar_archivo() {
+    local origen="$1"
+    local destino="$2"
+    local com="$3"
+
+    local ini="${com} ===== Inicio de $origen ====="
+    local fin="${com} ===== Fin de $origen ====="
+
+    if ! grep -Fxq "$ini" "$destino" 2>/dev/null; then
+        echo "No existe $origen en $destino"
+        return
+    fi
+
+    sed -i.bak "/^$(printf '%s' "$ini" | sed 's/[\/&]/\\&/g')$/,/^$(printf '%s' "$fin" | sed 's/[\/&]/\\&/g')$/d" "$destino"
+
+    echo "Eliminado $origen de $destino"
 
 
 #############################################################################################
