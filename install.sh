@@ -106,6 +106,10 @@ _instalar() {
     clear
     apt install -y vim git btop tmux
     vim +PlugInstall +qa
+    cd /root
+    wget https://github.com/arsham/figurine/releases/download/v1.3.0/figurine_linux_amd64_v1.3.0.tar.gz -O /root/figurine.tar.gz
+    tar xzvf /root/figurine.tar.gz
+    cp /root/deploy/figurine /usr/local/bin/
     pause
 }
 
