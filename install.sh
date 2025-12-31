@@ -259,7 +259,7 @@ menu_loop() {
         done
 
         echo
-        echo "  ↑ ↓ mover   Enter seleccionar"
+        echo -e "${BBLANCO}  ↑ ↓ mover   ${BAMARILLO}Enter seleccionar${RESET}"
 
         read -rsn1 tecla
 
