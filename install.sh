@@ -3,7 +3,7 @@
 # Comprobar si se está ejecutando como root
 ################################################################################
 if [[ $EUID -ne 0 ]]; then
-    echo -e "\e[31m✖ Este script debe ejecutarse como root. Saliendo...\e[0m"
+    echo -e "\e[1;31m✖ Este script debe ejecutarse como root. Saliendo...\e[0m"
     exit 1
 fi
 #############################################################################################
