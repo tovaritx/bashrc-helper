@@ -1,4 +1,11 @@
 #!/bin/bash
+################################################################################
+# Comprobar si se está ejecutando como root
+################################################################################
+if [[ $EUID -ne 0 ]]; then
+    echo -e "\e[31m✖ Este script debe ejecutarse como root. Saliendo...\e[0m"
+    exit 1
+fi
 #############################################################################################
 # DEFINICIONES
 #############################################################################################
@@ -23,10 +30,10 @@ MENU_PRINCIPAL=(
   "➤ Personalizar entorno bash"
   "➤ Permitir SSH root"
   "➤ Permitir sudo a tovaritx sin contraseña"
-  "🛠 Instalar programas consola"
-  "🛠 Instalar ayudantes consola"
-  "🛠 Instalar ProxMenux"
-  "📄 Submenú programas"
+  "➤ Instalar programas consola"
+  "➤ Instalar ayudantes consola"
+  "➤ Instalar ProxMenux"
+  "➤➤ Submenú programas"
   "↩ Salir"
 )
 # Colores
@@ -36,8 +43,8 @@ COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 ###############################################################################################
 
 MENU_SISTEMA=(
-  "🚀 Ejecutar ProxMenux"
-  "🚀 Ejecutar btop"
+  "▶ Ejecutar ProxMenux"
+  "▶ Ejecutar btop"
   "↩ Volver"
 )
 # Colores
@@ -240,7 +247,7 @@ menu_loop() {
         echo
         echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 4"
         echo -e "  ────────────────────────────────────"
-        echo -e "${BVERDE} 🚀 Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
+        echo -e "${BVERDE} ℹ Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
         echo
 
         for i in "${!_opciones[@]}"; do
