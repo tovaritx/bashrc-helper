@@ -26,14 +26,14 @@ curl -fsSL "$BASE_URL/tmux-help.sh"    -o "$TMP_DIR/tmux-help.sh"
 # MENÚS (SOLO TEXTOS)
 #############################################################################################
 MENU_PRINCIPAL=(
-  "➤ Personalizar vim"
-  "➤ Personalizar entorno bash"
-  "➤ Permitir SSH root"
-  "➤ Permitir sudo a tovaritx sin contraseña"
-  "➤ Instalar programas consola"
-  "➤ Instalar ayudantes consola"
-  "➤ Instalar ProxMenux"
-  "➤➤ Submenú programas"
+  "➤ Personalizar vim                            "
+  "➤ Personalizar entorno bash                   "
+  "➤ Permitir SSH root                           "
+  "➤ Permitir sudo a tovaritx sin contraseña     "
+  "➤ Instalar programas consola                  "
+  "➤ Instalar ayudantes consola                  "
+  "➤ Instalar ProxMenux                          "
+  "➤➤ Submenú programas                         "
   "↩ Salir"
 )
 # Colores
@@ -43,9 +43,9 @@ COLOR_NORM_PRINCIPAL="\e[100m"  # gris oscuro no seleccionada
 ###############################################################################################
 
 MENU_SISTEMA=(
-  "▶ Ejecutar ProxMenux"
-  "▶ Ejecutar btop"
-  "↩ Volver"
+  "▶ Ejecutar ProxMenux                           "
+  "▶ Ejecutar btop                                "
+  "↩ Volver                                       "
 )
 # Colores
 COLOR_SEL_SISTEMA="\e[1;45m"    # magenta selección
@@ -245,7 +245,7 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 4"
+        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 5"
         echo -e "  ────────────────────────────────────"
         echo -e "${BVERDE} ℹ Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
         echo
