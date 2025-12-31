@@ -22,6 +22,7 @@ MENU_PRINCIPAL=(
   "Personalizar vim"
   "Personalizar entorno bash"
   "Permitir SSH root"
+  "Permitir sudo a tovaritx sin contraseña"
   "Instalar programas consola"
   "Instalar ayudantes consola"
   "Instalar ProxMenux"
@@ -50,6 +51,7 @@ ACCIONES_PRINCIPAL=(
   _vim
   _bash
   _ssh
+  _sudo
   _instalar
   _instalar_ayudantes
   _proxmenux
@@ -66,6 +68,10 @@ ACCIONES_SISTEMA=(
 #############################################################################################
 # ACCIONES
 #############################################################################################
+_sudo(){
+  echo "tovaritx ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/tovaritx && sudo chmod 440 /etc/sudoers.d/tovaritx
+  pause
+}
 _eproxmenux() {
   menu
 }
@@ -139,6 +145,26 @@ BLANCO="\e[97m"
 FSELEC="\e[44m"
 FNORMAL="\e[40m"
 
+
+# Colores normales
+NEGRO="\e[30m"
+ROJO="\e[31m"
+VERDE="\e[32m"
+AMARILLO="\e[33m"
+AZUL="\e[34m"
+MAGENTA="\e[35m"
+CIAN="\e[36m"
+BLANCO="\e[37m"
+
+# Colores con brillo (bold)
+BNEGRO="\e[1;30m"
+BROJO="\e[1;31m"
+BVERDE="\e[1;32m"
+BAMARILLO="\e[1;33m"
+BAZUL="\e[1;34m"
+BMAGENTA="\e[1;35m"
+BCIAN="\e[1;36m"
+BBLANCO="\e[1;37m"
 #############################################################################################
 # PAUSA
 #############################################################################################
@@ -212,8 +238,9 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo "  CONFIGURADOR Y PROGRAMAS TERMINAL 4"
-        echo "  ────────────────────────────────────"
+        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 4"
+        echo -e "  ────────────────────────────────────"
+        echo -e "${BVERDE} Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
         echo
 
         for i in "${!_opciones[@]}"; do
