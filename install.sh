@@ -1,11 +1,4 @@
 #!/bin/bash
-################################################################################
-# Comprobar si se está ejecutando como root
-################################################################################
-if [[ $EUID -ne 0 ]]; then
-    echo -e "\e[1;31m✖ Este script debe ejecutarse como root. Saliendo...\e[0m"
-    exit 1
-fi
 #############################################################################################
 # DEFINICIONES
 #############################################################################################
@@ -143,6 +136,13 @@ _menu_programas() {
     menu_loop MENU_SISTEMA ACCIONES_SISTEMA "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
 }
 
+################################################################################
+# Comprobar si se está ejecutando como root
+################################################################################
+if [[ $EUID -ne 0 ]]; then
+    echo -e "\e[1;31m✖ Este script debe ejecutarse como root. Saliendo...\e[0m"
+    exit 1
+fi
 
 #############################################################################################
 # COLORES (ALTO CONTRASTE)
