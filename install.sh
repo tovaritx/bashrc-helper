@@ -122,6 +122,8 @@ _instalar() {
     wget https://github.com/arsham/figurine/releases/download/v1.3.0/figurine_linux_amd64_v1.3.0.tar.gz -O /root/figurine.tar.gz
     tar xzvf /root/figurine.tar.gz
     cp /root/deploy/figurine /usr/local/bin/
+    echo "#!/bin/sh" > /etc/update-motd.d/99-figurine
+    echo "figurine -f Star\ Wars.flf '$(hostname)'" >> /etc/update-motd.d/99-figurine
     pause
 }
 
