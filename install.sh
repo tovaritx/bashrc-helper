@@ -91,6 +91,12 @@ _instalar_ayudantes(){
     clear
     añadir_archivo "$TMP_DIR/tmux-help.sh" "/root/.bashrc" "#"
     añadir_archivo "$TMP_DIR/tmux-help.sh" "/home/tovaritx/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/docker-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/docker-help.sh" "/home/tovaritx/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/netstat-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/netstat-help.sh" "/home/tovaritx/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/ps-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/ps-help.sh" "/home/tovaritx/.bashrc" "#"
     pause
 }
 
