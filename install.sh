@@ -28,7 +28,7 @@ MENU_PRINCIPAL=(
   "➤ Instalar ayudantes consola                  "
   "➤ Instalar ProxMenux                          "
   "➤➤ Submenú programas                         "
-  "➤➤ Submenú ayudantes comandos comunes"
+  "➤➤ Submenú ayudantes comandos comunes        "
   "↩ Salir                                       "
 )
 # Colores
