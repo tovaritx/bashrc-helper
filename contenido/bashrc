@@ -9,4 +9,12 @@ alias tvx='bash <(curl -fsSL https://raw.githubusercontent.com/tovaritx/bashrc-h
 #personalizaciones en http://ezprompt.net/
 export PS1='\[\e[38;5;51;40m\]\u\[\e[38;5;50;40m\]@\[\e[38;5;48;40;1;4;53m\]\H\[\e[0;38;5;154;40m\][\[\e[38;5;190;40m\]\A\[\e[38;5;190;40m\]~\[\e[38;5;226;40m\]\d\[\e[38;5;226;40m\]]\[\e[38;5;220;40m\].\[\e[38;5;220;40m\]/\[\e[38;5;220;40m\]\W\[\e[97;40m\]\\$\[\e[0m\] '
 
+# Cargar todos los helpers
+HELPERS_DIR="/usr/local/share/bash-helpers"
+if [[ -d "$HELPERS_DIR" ]]; then
+    for f in "$HELPERS_DIR"/*-help.sh; do
+        [[ -f "$f" ]] || continue
+        source "$f"
+    done
+fi
 
