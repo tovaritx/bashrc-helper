@@ -225,7 +225,6 @@ _menu_ayudantes_auto() {
         _run_helper_$funcion() {
             source \"$f\"
             $funcion
-            pause
         }
         "
     done
