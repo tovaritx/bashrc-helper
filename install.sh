@@ -119,7 +119,8 @@ _instalar_ayudantes(){
 EOF
 
     # Ahora usamos tu función añadir_archivo para insertarlo en .bashrc
-    añadir_archivo "$TMP_HELPER_BLOCK" "$HOME/.bashrc" "#"
+    añadir_archivo "$TMP_HELPER_BLOCK" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_HELPER_BLOCK" "/home/tovaritx/.bashrc" "#"
     rm "$TMP_HELPER_BLOCK"
     echo "Instalación completa. Ejecuta 'source ~/.bashrc' para cargar los helpers."
     pause
