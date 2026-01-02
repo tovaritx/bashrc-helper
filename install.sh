@@ -4,7 +4,7 @@
 #############################################################################################
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
 BASE_REPO="tovaritx/bashrc-helper"
-HELPERS_PATH="contenido"
+PATH_HELPERS="contenido"
 HELPERS_DIR="/usr/local/share/bash-helpers"
 TMP_DIR="/tmp/bashrc-helper"
 
@@ -17,18 +17,6 @@ echo "Descargando archivos..."
 curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
 curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
 curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
-
-echo "Descargando helpers automáticamente..."
-curl -fsSL "https://api.github.com/repos/$BASE_REPO/contents/$HELPERS_PATH" |
-grep '"name":' |
-cut -d '"' -f4 |
-grep '\-help\.sh$' |
-while read -r f; do
-    curl -fsSL "https://raw.githubusercontent.com/$BASE_REPO/main/$HELPERS_PATH/$f" \
-        -o "$HELPERS_DIR/$f"
-done
-
-
 
 #############################################################################################
 # MENÚS (SOLO TEXTOS)
@@ -106,19 +94,33 @@ _vim() {
 
 _instalar_ayudantes(){
     clear
-    añadir_archivo "$TMP_DIR/tmux-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/tmux-help.sh" "/home/tovaritx/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/docker-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/docker-help.sh" "/home/tovaritx/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/netstat-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/netstat-help.sh" "/home/tovaritx/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/ps-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/ps-help.sh" "/home/tovaritx/.bashrc" "#"
-    
-    añadir_archivo "$TMP_DIR/systemctl-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/systemctl-help.sh" "/home/tovaritx/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/journalctl-help.sh" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_DIR/journalctl-help.sh" "/home/tovaritx/.bashrc" "#"
+    set -e    
+    mkdir -p "$HELPERS_DIR"
+    echo "Descargando helpers desde GitHub..."
+    curl -fsSL "https://api.github.com/repos/$REPO/contents/$PATH_HELPERS" \
+        | grep '"name":' \
+        | cut -d '"' -f4 \
+        | grep '\-help\.sh$' \
+        | while read -r f; do
+            echo "Descargando $f..."
+            curl -fsSL "https://raw.githubusercontent.com/$REPO/main/$PATH_HELPERS/$f" \
+                -o "$HELPERS_DIR/$f"
+        done
+    echo "Configurando ~/.bashrc para cargar helpers automáticamente..."
+    # Creamos un fichero temporal con el bloque que queremos añadir
+    TMP_HELPER_BLOCK="$(mktemp)"
+    cat > "$TMP_HELPER_BLOCK" <<'EOF'
+    if [[ -d "$HELPERS_DIR" ]]; then
+        for f in "$HELPERS_DIR"/*-help.sh; do
+            [[ -f "$f" ]] || continue
+            source "$f"
+        done
+    fi
+    EOF
+    # Ahora usamos tu función añadir_archivo para insertarlo en .bashrc
+    añadir_archivo "$TMP_HELPER_BLOCK" "$HOME/.bashrc" "#"
+    rm "$TMP_HELPER_BLOCK"
+    echo "Instalación completa. Ejecuta 'source ~/.bashrc' para cargar los helpers."
     pause
 }
 
