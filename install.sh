@@ -2,8 +2,9 @@
 #############################################################################################
 # DEFINICIONES
 #############################################################################################
-BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido"
+BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
 TMP_DIR="/tmp/bashrc-helper"
+HELPERS_DIR="$TMP_DIR"
 echo "Preparando entorno..."
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
@@ -27,6 +28,7 @@ MENU_PRINCIPAL=(
   "➤ Instalar ayudantes consola                  "
   "➤ Instalar ProxMenux                          "
   "➤➤ Submenú programas                         "
+  "➤➤ Submenú ayudantes comandos comunes"
   "↩ Salir                                       "
 )
 # Colores
@@ -56,6 +58,7 @@ ACCIONES_PRINCIPAL=(
   _instalar_ayudantes
   _proxmenux
   _menu_programas
+  _menu_ayudantes_auto
   _salir
 )
 
@@ -97,6 +100,11 @@ _instalar_ayudantes(){
     añadir_archivo "$TMP_DIR/netstat-help.sh" "/home/tovaritx/.bashrc" "#"
     añadir_archivo "$TMP_DIR/ps-help.sh" "/root/.bashrc" "#"
     añadir_archivo "$TMP_DIR/ps-help.sh" "/home/tovaritx/.bashrc" "#"
+    
+    añadir_archivo "$TMP_DIR/systemctl-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/systemctl-help.sh" "/home/tovaritx/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/journalctl-help.sh" "/root/.bashrc" "#"
+    añadir_archivo "$TMP_DIR/journalctl-help.sh" "/home/tovaritx/.bashrc" "#"
     pause
 }
 
@@ -187,6 +195,45 @@ pause() {
     echo
     read -rp "Pulsa Enter para continuar..."
 }
+
+#############################################################################################
+# SUBMENU DE AYUDANTES
+#############################################################################################
+_menu_ayudantes_auto() {
+    local helpers=()
+    local acciones=()
+
+    for f in "$HELPERS_DIR"/*-help.sh; do
+        [[ -f "$f" ]] || continue
+
+        local base
+        base=$(basename "$f" .sh)
+
+        local nombre="${base%-help}"
+        local funcion="$base"
+
+        # Texto bonito
+        helpers+=( "Ayuda ${nombre}" )
+
+        # Acción dinámica
+        acciones+=( "_run_helper_$funcion" )
+
+        # Crear función wrapper dinámicamente
+        eval "
+        _run_helper_$funcion() {
+            source \"$f\"
+            $funcion
+        }
+        "
+    done
+
+    helpers+=( "Volver" )
+    acciones+=( "_volver" )
+
+    menu_loop helpers acciones "$COLOR_SEL_SISTEMA" "$COLOR_NORM_SISTEMA"
+}
+
+
 
 #############################################################################################
 # AÑADIR ARCHIVO A OTRO (CON ETIQUETAS)
