@@ -93,39 +93,25 @@ _vim() {
 }
 
 _instalar_ayudantes(){
-    clear
-    set -e    
-    mkdir -p "$HELPERS_DIR"
-    echo "Descargando helpers desde GitHub..."
-    curl -fsSL "https://api.github.com/repos/$REPO/contents/$PATH_HELPERS" \
-        | grep '"name":' \
-        | cut -d '"' -f4 \
-        | grep '\-help\.sh$' \
-        | while read -r f; do
-            echo "Descargando $f..."
-            curl -fsSL "https://raw.githubusercontent.com/$REPO/main/$PATH_HELPERS/$f" \
-                -o "$HELPERS_DIR/$f"
-        done
-    echo "Configurando ~/.bashrc para cargar helpers automáticamente..."
-# Creamos un fichero temporal con el bloque que queremos añadir
-TMP_HELPER_BLOCK="$(mktemp)"
-cat > "$TMP_HELPER_BLOCK" <<'EOF'
-# ===== INICIO BASH HELPERS =====
-if [[ -d "$HELPERS_DIR" ]]; then
-    for f in "$HELPERS_DIR"/*-help.sh; do
-        [[ -f "$f" ]] || continue
-        source "$f"
-    done
-fi
-# ===== FIN BASH HELPERS =====
-EOF
-
-    # Ahora usamos tu función añadir_archivo para insertarlo en .bashrc
-    añadir_archivo "$TMP_HELPER_BLOCK" "/root/.bashrc" "#"
-    añadir_archivo "$TMP_HELPER_BLOCK" "/home/tovaritx/.bashrc" "#"
-    rm "$TMP_HELPER_BLOCK"
-    echo "Instalación completa. Ejecuta 'source ~/.bashrc' para cargar los helpers."
-    pause
+  clear
+  # Crear directorio si no existe
+  mkdir -p "$HELPERS_DIR"
+  # Descargar helpers desde GitHub si no existen
+  if [[ $(ls "$HELPERS_DIR"/*-help.sh 2>/dev/null | wc -l) -eq 0 ]]; then
+      echo "Descargando helpers..."
+      curl -fsSL "https://api.github.com/repos/$REPO/contents/$PATH_HELPERS" \
+          | grep '"name":' \
+          | cut -d '"' -f4 \
+          | grep '\-help\.sh$' \
+          | while read -r f; do
+              echo "  $f"
+              curl -fsSL "https://raw.githubusercontent.com/$REPO/main/$PATH_HELPERS/$f" \
+                  -o "$HELPERS_DIR/$f"
+          done
+  fi
+  añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
+  añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
+  pause
 }
 
 _bash() {
