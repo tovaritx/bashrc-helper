@@ -1,5 +1,5 @@
 tmux-help() {
-    cat <<'EOF'
+    cat <<'EOF' | less -X
 
 TMUX — RECORDATORIO RÁPIDO
 =========================

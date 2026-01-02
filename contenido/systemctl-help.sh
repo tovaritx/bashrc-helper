@@ -1,5 +1,5 @@
 systemctl-help() {
-    cat <<'EOF' | less
+    cat <<'EOF' | less -X
 
 SYSTEMCTL — RECORDATORIO RÁPIDO
 ==============================

@@ -1,5 +1,5 @@
 netstat-help() {
-    cat <<'EOF' | less
+    cat <<'EOF' | less -X
 
 NETSTAT — RECORDATORIO RÁPIDO
 ============================

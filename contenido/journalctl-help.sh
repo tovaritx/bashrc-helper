@@ -1,5 +1,5 @@
 journal-help() {
-    cat <<'EOF' | less
+    cat <<'EOF' | less -X
 
 JOURNALCTL — RECORDATORIO RÁPIDO
 ===============================

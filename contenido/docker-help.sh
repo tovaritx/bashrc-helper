@@ -1,5 +1,5 @@
 docker-help() {
-    cat <<'EOF' | less
+    cat <<'EOF' | less -X
 DOCKER — RECORDATORIO RÁPIDO
 ============================
 
