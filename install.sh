@@ -2,7 +2,7 @@
 #############################################################################################
 # DEFINICIONES
 #############################################################################################
-VERSION="0.7"
+VERSION="0.8"
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
 BASE_REPO="tovaritx/bashrc-helper"
 PATH_HELPERS="contenido"
@@ -106,8 +106,7 @@ _instalar_ayudantes(){
           | grep '\-help\.sh$' \
           | while read -r f; do
               echo "  $f"
-              curl -fsSL "https://raw.githubusercontent.com/$REPO/main/$PATH_HELPERS/$f" \
-                  -o "$HELPERS_DIR/$f"
+              curl -fsSL "$BASE_URL/$f" -o "$HELPERS_DIR/$f"
           done
   #fi
   añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
