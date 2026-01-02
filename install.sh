@@ -233,6 +233,7 @@ _menu_ayudantes_auto() {
         _run_helper_$funcion() {
             source \"$f\"
             $funcion
+            pause
         }
         "
     done
@@ -312,7 +313,7 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 0.5"
+        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 0.6"
         echo -e          "  ────────────────────────────────────────"
         echo -e "${BVERDE} ℹ Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
         echo
