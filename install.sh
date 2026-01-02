@@ -97,7 +97,7 @@ _instalar_ayudantes(){
   # Crear directorio si no existe
   mkdir -p "$HELPERS_DIR"
   # Descargar helpers desde GitHub si no existen
-  if [[ $(ls "$HELPERS_DIR"/*-help.sh 2>/dev/null | wc -l) -eq 0 ]]; then
+  #if [[ $(ls "$HELPERS_DIR"/*-help.sh 2>/dev/null | wc -l) -eq 0 ]]; then
       echo "Descargando helpers..."
       curl -fsSL "https://api.github.com/repos/$REPO/contents/$PATH_HELPERS" \
           | grep '"name":' \
@@ -108,7 +108,7 @@ _instalar_ayudantes(){
               curl -fsSL "https://raw.githubusercontent.com/$REPO/main/$PATH_HELPERS/$f" \
                   -o "$HELPERS_DIR/$f"
           done
-  fi
+  #fi
   añadir_archivo "$TMP_DIR/bashrc" "/root/.bashrc" "#"
   añadir_archivo "$TMP_DIR/bashrc" "/home/tovaritx/.bashrc" "#"
   pause
