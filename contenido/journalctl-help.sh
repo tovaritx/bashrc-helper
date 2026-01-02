@@ -1,4 +1,4 @@
-journal-help() {
+journalctl-help() {
     cat <<'EOF' | less -X 
 
 JOURNALCTL — RECORDATORIO RÁPIDO
