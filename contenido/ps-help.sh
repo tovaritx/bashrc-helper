@@ -1,5 +1,5 @@
 ps-help() {
-    cat <<'EOF' | less -X
+    cat <<'EOF' | less -X 
 
 PS — RECORDATORIO RÁPIDO
 =======================
