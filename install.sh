@@ -100,7 +100,7 @@ _instalar_ayudantes(){
   # Descargar helpers desde GitHub si no existen
   #if [[ $(ls "$HELPERS_DIR"/*-help.sh 2>/dev/null | wc -l) -eq 0 ]]; then
       echo "Descargando helpers..."
-      curl -fsSL "https://api.github.com/repos/$REPO/contents/$PATH_HELPERS" \
+      curl -fsSL "$BASE_URL" \
           | grep '"name":' \
           | cut -d '"' -f4 \
           | grep '\-help\.sh$' \
