@@ -3,16 +3,30 @@
 # DEFINICIONES
 #############################################################################################
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
+BASE_REPO="tovaritx/bashrc-helper"
+HELPERS_PATH="contenido"
+HELPERS_DIR="/usr/local/share/bash-helpers"
 TMP_DIR="/tmp/bashrc-helper"
-HELPERS_DIR="$TMP_DIR"
+
 echo "Preparando entorno..."
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
+mkdir -p "$HELPERS_DIR"
+
 echo "Descargando archivos..."
 curl -fsSL "$BASE_URL/vimrc"  -o "$TMP_DIR/vimrc"
 curl -fsSL "$BASE_URL/bashrc" -o "$TMP_DIR/bashrc"
 curl -fsSL "$BASE_URL/ssh"    -o "$TMP_DIR/ssh"
-curl -fsSL "$BASE_URL/tmux-help.sh"    -o "$TMP_DIR/tmux-help.sh"
+
+echo "Descargando helpers automáticamente..."
+curl -fsSL "https://api.github.com/repos/$BASE_REPO/contents/$HELPERS_PATH" |
+grep '"name":' |
+cut -d '"' -f4 |
+grep '\-help\.sh$' |
+while read -r f; do
+    curl -fsSL "https://raw.githubusercontent.com/$BASE_REPO/main/$HELPERS_PATH/$f" \
+        -o "$HELPERS_DIR/$f"
+done
 
 
 
@@ -203,22 +217,18 @@ _menu_ayudantes_auto() {
     local helpers=()
     local acciones=()
 
+    shopt -s nullglob
+
     for f in "$HELPERS_DIR"/*-help.sh; do
-        [[ -f "$f" ]] || continue
+        local base nombre funcion
 
-        local base
         base=$(basename "$f" .sh)
+        nombre="${base%-help}"
+        funcion="$base"
 
-        local nombre="${base%-help}"
-        local funcion="$base"
-
-        # Texto bonito
-        helpers+=( "Ayuda ${nombre}" )
-
-        # Acción dinámica
+        helpers+=( "Ayuda $nombre" )
         acciones+=( "_run_helper_$funcion" )
 
-        # Crear función wrapper dinámicamente
         eval "
         _run_helper_$funcion() {
             source \"$f\"
@@ -226,6 +236,8 @@ _menu_ayudantes_auto() {
         }
         "
     done
+
+    shopt -u nullglob
 
     helpers+=( "Volver" )
     acciones+=( "_volver" )
