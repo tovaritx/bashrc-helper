@@ -107,15 +107,17 @@ _instalar_ayudantes(){
                 -o "$HELPERS_DIR/$f"
         done
     echo "Configurando ~/.bashrc para cargar helpers automáticamente..."
-    # Creamos un fichero temporal con el bloque que queremos añadir
-    TMP_HELPER_BLOCK="$(mktemp)"
-    cat > "$TMP_HELPER_BLOCK" <<'EOF'
-    if [[ -d "$HELPERS_DIR" ]]; then
-        for f in "$HELPERS_DIR"/*-help.sh; do
-            [[ -f "$f" ]] || continue
-            source "$f"
-        done
-    fi
+# Creamos un fichero temporal con el bloque que queremos añadir
+TMP_HELPER_BLOCK="$(mktemp)"
+cat > "$TMP_HELPER_BLOCK" <<'EOF'
+# ===== INICIO BASH HELPERS =====
+if [[ -d "$HELPERS_DIR" ]]; then
+    for f in "$HELPERS_DIR"/*-help.sh; do
+        [[ -f "$f" ]] || continue
+        source "$f"
+    done
+fi
+# ===== FIN BASH HELPERS =====
 EOF
 
     # Ahora usamos tu función añadir_archivo para insertarlo en .bashrc
