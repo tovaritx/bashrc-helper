@@ -2,7 +2,7 @@
 #############################################################################################
 # DEFINICIONES
 ############################################################################################# 
-VERSION="0.8"
+VERSION="0.9"
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
 BASE_REPO="tovaritx/bashrc-helper"
 PATH_HELPERS="contenido"
@@ -100,7 +100,7 @@ _instalar_ayudantes(){
   # Descargar helpers desde GitHub si no existen
   #if [[ $(ls "$HELPERS_DIR"/*-help.sh 2>/dev/null | wc -l) -eq 0 ]]; then
       echo "Descargando helpers..."
-      curl -fsSL "$BASE_URL" \
+      curl -fsSL "https://api.github.com/repos/$BASE_REPO/contents/$PATH_HELPERS" \
           | grep '"name":' \
           | cut -d '"' -f4 \
           | grep '\-help\.sh$' \
