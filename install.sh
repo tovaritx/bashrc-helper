@@ -2,6 +2,7 @@
 #############################################################################################
 # DEFINICIONES
 #############################################################################################
+VERSION="0.7"
 BASE_URL="https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/contenido" 
 BASE_REPO="tovaritx/bashrc-helper"
 PATH_HELPERS="contenido"
@@ -304,7 +305,7 @@ menu_loop() {
     while true; do
         clear
         echo
-        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL 0.6"
+        echo -e "${BBLANCO}  CONFIGURADOR Y PROGRAMAS TERMINAL ${VERSION}"
         echo -e          "  ────────────────────────────────────────"
         echo -e "${BVERDE} ℹ Una vez ejecutado por 1ª vez, este menu es accesible con el comando 'tvx'${RESET}"
         echo
