@@ -117,6 +117,7 @@ _instalar_ayudantes(){
         done
     fi
 EOF
+
     # Ahora usamos tu función añadir_archivo para insertarlo en .bashrc
     añadir_archivo "$TMP_HELPER_BLOCK" "$HOME/.bashrc" "#"
     rm "$TMP_HELPER_BLOCK"
