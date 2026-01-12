@@ -138,6 +138,7 @@ _instalar() {
     cp /root/deploy/figurine /usr/local/bin/
     echo "#!/bin/sh" > /etc/update-motd.d/99-figurine
     echo "figurine -f Star\ Wars.flf '$(hostname)'" >> /etc/update-motd.d/99-figurine
+    chmod 755 /etc/update-motd.d/99-figurin
     pause
 }
 
