@@ -1,4 +1,5 @@
 #!/bin/bash
+# INSTALACION:  sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/tovaritx/bashrc-helper/main/install.sh)"
 #############################################################################################
 # DEFINICIONES
 ############################################################################################# 
