@@ -15,7 +15,7 @@ call plug#end()
 
 syntax on
 "colorscheme gruvbox
-colorscheme ron
+colorscheme evening
 set mouse-=a
 set encoding=utf-8          " always use unicode
 set hidden                  " to hide warning when opening files
