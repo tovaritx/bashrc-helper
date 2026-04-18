@@ -18,6 +18,7 @@ syntax on
 set termguicolors
 colorscheme evening
 
+
 set mouse-=a
 set encoding=utf-8          " always use unicode
 set hidden                  " to hide warning when opening files
